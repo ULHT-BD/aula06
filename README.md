@@ -2,19 +2,24 @@
 Nesta aula continuamos a trabalhar a linguagem SQL. Olhamos para as funções de agregação que utilizamos para obter valores cálculados através de operações aplicadas sobre múltiplos tuplos.
 Bom trabalho!
 
+SUM
+AVG
+COUNT
+
+
 [0. Requisitos](#0-requisitos)
 
-[1. Operadores de Comparação](#1-operadores-de-comparação)
+[1. Função IF e CASE](#1-função-if-e-case)
 
-[2. AND, OR e NOT](#2-and-or-e-not)
+[2. Conversão de Tipos de Dados](#2-conversão-de-tipos-de-dados)
 
-[3. IN, LIKE e REGEXP](#3-in-like-e-regexp)
+[3. Funções de Agregação](#3-funções-de-agregação)
 
-[4. Funções Numéricas](#4-funções-numéricas)
+[4. GROUP BY](#4-group-by)
 
-[5. Funções de String](#5-funções-de-string)
+[5. HAVING](#5-having)
 
-[6. Funções de Data](#6-funções-de-data)
+[6. Operações UNION, INTERSECT e MINUS](#6-operações-union-intersect-e-minus)
 
 [7. Trabalho de Casa](#7-trabalho-de-casa)
 
@@ -23,129 +28,165 @@ Bom trabalho!
 [Outros](#outros)
 
 ## 0. Requisitos
-Requisitos: Para esta aula, precisa de ter o ambiente de trabalho configurado ([Docker](https://www.docker.com/products/docker-desktop/) com [base de dados HR](https://github.com/ULHT-BD/aula03/blob/main/docker_db_aula03.zip) e [DBeaver](https://dbeaver.io/download/)). Caso ainda não o tenha feito, veja como fazer seguindo o passo 1 da [aula anterior 3](https://github.com/ULHT-BD/aula03/edit/main/README.md#1-prepare-o-seu-ambiente-de-trabalho).
+Requisitos: Para esta aula, precisa de ter o ambiente de trabalho configurado ([Docker](https://www.docker.com/products/docker-desktop/) com [base de dados HR](https://github.com/ULHT-BD/aula03/blob/main/docker_db_aula03.zip) e [DBeaver](https://dbeaver.io/download/)). Caso ainda não o tenha feito, veja como fazer seguindo o passo 1 da [aula03](https://github.com/ULHT-BD/aula03/edit/main/README.md#1-prepare-o-seu-ambiente-de-trabalho).
 
 Caso já tenha o docker pode iniciá-lo usando o comando ```docker start mysgbd``` no terminal, ou através do interface gráfico do docker-desktop:
 <img width="1305" alt="image" src="https://user-images.githubusercontent.com/32137262/194916340-13af4c85-c282-4d98-a571-9c4f7b468bbb.png">
 
 Deve também ter o cliente DBeaver.
 
-## 1. Operadores de Comparação
-Como vimos nas aulas anteriores, em SQL podemos usar a cláusula WHERE para especificar condições que condicionam o conjunto de tuplos retornados como resultado de pesquisa ou sobre o qual é aplicada alguma operação de atualização ou remoção.
+## 1. Função IF e CASE
+Como vimos na aula anterior, podemos usar a função ```IFNULL``` para testar a condição se um dado valor é ```NULL``` e devolver caso a comparação seja verdadeira, então retornamos outro valor. Podemos usar a função ```IF``` para testar outras condições sendo assim possivel devolver valores diferentes na função de acordo com o resultado do teste da condição. A sintaxe é ```IF(<<condição>>, <<valor-se-verdadeiro>>, <<valor-se-falso>>)```
 
-Podemos usar vários operadores:
-|Operador|Descrição|Exemplo|
-|--------|---------|-------|
-|=|Igual|Quais os alunos que têm 20 anos: ```SELECT * FROM alunos WHERE idade = 20;```|
-|>|Maior|Quais os alunos que têm mais de 20 anos: ```SELECT * FROM alunos WHERE idade > 20;```|
-|<|Menor|Quais os alunos que têm menos de 20 anos: ```SELECT * FROM alunos WHERE idade < 20;```|
-|>=|Maior ou igual|Quais os alunos que têm 20 ou mais anos: ```SELECT * FROM alunos WHERE idade >= 20;```|
-|<=|Menor ou igual|Quais os alunos que têm até 20 anos (inclusivé): ```SELECT * FROM alunos WHERE idade <= 20;```|
-|<>|Diferente|Quais os alunos que não têm 20 anos: ```SELECT * FROM alunos WHERE idade <> 20;```|
+Por exemplo:
 
-### Exercícios
-Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. A lista de empregados cujo primeiro nome é John.
-
-2. A lista de empregados cujo salário é superior a 5300.
-
-3. Quais os departamentos cujo id é inferior ou igual a 200.
- 
-4. Que outras regiões existem para além de Europe.
-
- 
-NOTA: 
-Podemos também usar operadores de comparação para obter o resultado de comparações diretamente das queries, por exemplo, para cada aluno indique se o aluno tem idade superior a 20 (True=1 ou False=0)?
 ``` sql
-SELECT nome, idade, idade > 20 FROM alunos;
+ SELECT IF(idade >=18, 'Maior de Idade', 'Menor de Idade') FROM estudante;
 ```
 
-## 2. AND, OR e NOT
-Na cláusula ```WHERE``` podem ser utilizados os operadores ```AND```, ```OR``` e ```NOT``` para filtrar tuplos segundo várias condições.
+A função CASE permite testar um conjunto de várias condições e devolver valores diferentes segundo resultado do teste. O valor devolvido é o retornado pela primeira condição que teste verdadeiro. A sintaxe pode assumir duas formulações:
 
+1. testar vários valores para uma condição
+```
+CASE condição
+ WHEN valor-1 THEN resultado-1
+ WHEN valor-2 THEN resultado-2
+ WHEN valor-N THEN resultado-N
+ ELSE resultado
+END;
+```
+Exemplo:
+``` sql
+SELECT
+ CASE ano_curso
+  WHEN 1 THEN 'Caloiro'
+  WHEN 3 THEN 'Finalista de Licenciatura'
+  WHEN 5 THEN 'Finalista de Mestrado'
+  ELSE 'Inscrito em anos intermédios'
+ END
+FROM
+ estudante;
+```
+
+2. testar várias condições diferentes
+```
+CASE
+ WHEN condição-1 THEN resultado-1
+ WHEN condição-2 THEN resultado-2
+ WHEN condição-N THEN resultado-N
+ ELSE resultado
+END;
+```
+
+Exemplo:
+``` sql
+SELECT
+ CASE
+  WHEN nota_final >= 10 THEN 'Aprovado'
+  WHEN nota_final >=8 THEN 'Exame Oral'
+  ELSE 'Reprovado'
+ END
+FROM
+ estudante;
+```
+
+### Exercícios
+Para cada uma das alíneas seguintes, escreva a query que permite obter:
+1. 
+
+
+## 2. Conversão de Tipos de Dados
+Verificámos, nas aulas anteriores, que podemos usar em SQL vários tipos de dados (e.g. texto, numérico, data). O SQL disponibiliza funções que permitem efetuar conversões entre os tipos de dados.
 
 Podemos usar os operadores:
-|Operador|Descrição|Exemplo|
+|Função|Descrição|Exemplo|
 |--------|---------|-------|
-|AND|e - Todas as condições têm de ser verdadeiras|Quais os alunos que têm mas de 20 anos e menos de 25 anos: ```SELECT * FROM alunos WHERE idade > 20 AND idade < 25;```|
-|OR|ou - Apenas uma das condições tem de ser verdadeira|Quais os alunos que têm menos de 20 anos ou mais de 25 anos: ```SELECT * FROM alunos WHERE idade < 20 OR idade > 25;```|
-|NOT|não - Filtrar quando condição é falsa|Quais os alunos que não têm mais de 20 anos: ```SELECT * FROM alunos WHERE NOT idade > 20;```|
+|FORMAT|Converter um número para uma string com n casas decimais|Apresentar nota final como string com 2 casas decimais: ```SELECT FORMAT(nota_final, 2) FROM aluno;```|
+|CAST|Converter um valor num dado tipo de dados (DATE, DATETIME, TIME, CHAR, SIGNED, UNSIGNED, BINARY)|Apresentar nota final como string com 2 casas decimais: ```SELECT CAST(ROUND(nota_final, 2) AS CHAR) FROM aluno;```|
 
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. Quais os empregados que cujo salário é superior a 3500 mas inferior a 5600?
+1. 
 
-2. Quais os empregados que recebem menos de 5000 ou mais de 10000
 
-3. Lista de empregados cujo departamento não é o 30 nem o 50 
-
-## 3. BETWEEN, IN, LIKE e REGEXP
-Os operadores ```IN```, ```LIKE``` e ```REGEXP``` permitem fazer comparações mais complexas, veja a seguinte tabela:
-|Operador|Descrição|Exemplo|
+## 3. Funções de Agregação
+As funções de agregação são funções que são aplicadas sobre um conjunto de tuplos e retornam um único valor. Várias funções existem:
+|Função|Descrição|Exemplo|
 |--------|---------|-------|
-|BETWEEN|Testar se atributo se encontra entre dois valores (inclusivo)|Quais os alunos que têm entre 20 e 25 anos: ```SELECT * FROM alunos WHERE idade BETWEEN 20 AND 25;```|
-|IN|Comparar com uma lista de valores (equivalente a comparações separadas por OR)|Quais os alunos cujo nome é Maria, Teresa ou Pedro: ```SELECT * FROM alunos WHERE nome IN ('Maria', 'Teresa', 'Pedro');```|
-|LIKE|Pesquisar um padrão numa coluna. Wilcards comuns ```%``` (representa zero ou múltiplos caracteres) e ```_``` (um único caracter)|Quais os alunos cujo nome começa por M e acaba em a (e.g. Maria, Marta, Mónica, etc): ```SELECT * FROM alunos WHERE nome LIKE 'M%a';```|
-|REGEXP|Pesquisar utilizando expressões regulares|Quais os alunos cujo nome começa por M e acaba em a (e.g. Maria, Marta, Mónica, etc): ```SELECT * FROM alunos WHERE nome REGEXP '^M.*a$';```|
+|MIN, MAX|Obter o valor máximo ou mínimo|Qual o aluno mais velho e mais novo: ```SELECT MAX(idade) mais_velho, MIN(idade) mais_novo FROM alunos;```|
+|AVG|Calcular o valor médio de um conjunto de valores|Qual a idade média dos alunos: ```SELECT AVG(idade) FROM alunos;```|
+|COUNT|Contar o número de ocorrências de tuplos diferentes de NULL|Quantos alunos existem e para quantos conhecemos a idade: ```SELECT COUNT(eid) total_alunos, COUNT(idade) idade_conhecida FROM alunos;```|
+|SUM|Calcular a soma de valores de um conjunto de tuplos|Qual a soma das classificacoes do aluno numero 213: ```SELECT SUM(nota_exercicio) FROM alunos WHERE eid = 213;```|
 
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. A lista de empregados cujo primeiro nome é David, Peter ou John
-2. A lista de empregados cujo primeiro nome começa e acaba com a letra d
-3. A lista de regiões cujo nome contém três ocorrêncas da letra 'a' (possivel resolver com LIKE ou REGEXP)
-4. A lista de países cujo nome contém três ocorrêncas da letra 'a' mas nenhum 'l' (possivel resolver com LIKE ou REGEXP)
-
-## 4. Funções Numéricas
-O MySQL disponibiliza um grande conjunto de funções que permitem operar sobre dados numéricos. Alguns exemplos são:
-
-|Operador|Descrição|Exemplo|
-|--------|---------|-------|
-|ABS|Obter o valor absoluto|Qual o valor absoluto de -231.5: ```SELECT ABS(-231.5);```|
-|SQRT|Obter o valor da raíz quadrada|Qual a raiz quadrada de 9: ```SELECT SQRT(9);```|
-|POW|Calcular o valor da potência|Qual o valor de potência 2 de base 4: ```SELECT POW(4, 2);```|
-|RAND|Obter um valor aleatório (entre 0 e 1)|Obtenha um valor aleatório entr 0 e 10: ```SELECT RAND()*10;```|
-|ROUND|Obter um valor arredondado|Obtenha o valor de pi arredondado para 2 casas decimais: ```SELECT ROUND(PI(), 2);```|
-
-### Exercícios
-Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. A lista dos nomes de empregados e um número id aleatório
-2. A lista dos nomes de empregados e respetivo salário com bonificação de 6% arredondado com duas casas décimais
-3. Os empregados cujo nome é David, com um número id aleatório e salário com bonificação de 6% arredondado com duas casas décimais
+1. 
 
 
-## 5. Funções de String
-O MySQL disponibiliza um grande conjunto de funções que permitem operar sobre strings. Alguns exemplos são:
+## 4. GROUP BY
+A cláusula ```GROUP BY``` permite aplicar funções de agregação agrupando por subconjuntos segundo um ou vários atributos. A sintaxe é:
 
-|Operador|Descrição|Exemplo|
-|--------|---------|-------|
-|LOWER ou LCASE|Converter todos os caracteres para minúsculas|Obter o nome de aluno em minúsculas: ```SELECT LOWER(nome) FROM alunos;```|
-|UPPER ou UCASE|Converter todos os caracteres para maiúsculas|Obter o nome de aluno em maiúsculas: ```SELECT UPPER(nome) FROM alunos;```|
-|CONCAT|Concatenar várias strings numa só|Construir nome completo a partir de nome e apelido: ```SELECT CONCAT(nome, ' ', apelido) FROM alunos;```|
-|CHAR_LENGTH|Obter o número de caracteres de uma string|Contar o número de letras de cada nome: ```SELECT CHAR_LENGTH(nome) FROM alunos;```|
-|STRCMP|Comparar duas strings (resultado -1, 0 ou 1) |Verificar se nome de aluno é 'Pedro': ```SELECT STRCMP(nome, 'Pedro') FROM alunos;```|
-|SUBSTR|Extrair uma substring de uma string|Obter as duas primeiras letras de cada nome: ```SELECT SUBSTR(nome, 1, 2) FROM alunos;```|
+``` sql
+ SELECT FUNCAO(atributo), atributo-1
+ FROM relação
+ WHERE condição
+ GROUP BY atributo-1, ..., atributo-n
+```
+
+Exemplo:
+
+Qual a idade média para cada nome próprio dos alunos
+``` sql
+ SELECT nome, AVG(idade)
+ FROM alunos
+ GROUP BY nome
+```
 
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. Obter a lista de todos os nomes próprios em minúsculas e apelidos em maiúsculas
-2. Obter a lista de todos os nomes completos concatenando primeiro nome e último nome, bem como um email no formato primeiro_nome.ultimo_nome@ulusofona.pt
-3. Obter a lista de nomes, apelidos e uma terceira coluna com as iniciais (e.g. Teresa, Carvalho, TC)
+1. 
 
-## 6. Funções de Data
-O MySQL disponibiliza um grande conjunto de funções que permitem operar sobre datas. Alguns exemplos são:
-|Operador|Descrição|Exemplo|
-|--------|---------|-------|
-|CURDATE e CURTIME|Obter a data ou hora atuais (do sistema)|Obter a data atual: ```SELECT CURDATE();```|
-|ADDDATE ou DATE_ADD|Adicionar um intervalo de tempo a uma data (DATE_SUB para subtrair)|Calcular a data que será após 45 dias: ```SELECT ADDDATE("2022-10-18", INTERVAL 45 DAY);```|
-|DATEDIFF|Calcular a diferença em dias entre duas datas|Calcular quantos dias passaram entre 24 e 1 de outubro: ```SELECT DATEDIFF("2022-10-24", "2022-10-01");```|
-|DATE_FORMAT|Permite formatar datas de acordo com pretendido|Obter data no formato dia, mês por extenso ano 4 digitos: ```SELECT DATE_FORMAT("2022-10-18", "%d %M %Y");```|
-|DAY|Extrair dia de uma data (outras possibilidades MONTH, YEAR, HOUR, WEEK, etc)|Obter o dia da data: ```SELECT DAY("2022-10-18");```|
+
+## 5. HAVING
+Não podemos usar a cláusula WHERE para filtrar tuplos com base no valor das funções de agregação. Em alternativa, a cláusula HAVING permite filtrar tuplos segundo o valor de funções de agregação. A sintaxe é:
+
+``` sql
+ SELECT FUNCAO(atributo), atributo-1
+ FROM relação
+ WHERE condição
+ GROUP BY atributo-1, ..., atributo-n
+ HAVING condição-FUNCAO(atributo)
+```
+
+Exemplo:
+
+Quais os nomes de alunos e respetiva idade média quando esta é superior a 23
+``` sql
+ SELECT nome, AVG(idade)
+ FROM alunos
+ GROUP BY nome
+ HAVING AVG(idade) > 23
+```
 
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. Duas colunas com qual a data atual e qual a hora atual. (experimente tambéma função NOW)
-2. A lista de todos os nomes de empregados e ano de data de contratação
-3. O número de dias passados desde que o empregado foi contratado até hoje
+1. 
+
+## 6. Operações UNION, INTERSECT e MINUS
+Em SQL podemos efetuar operações entre vários conjuntos. 
+![image](https://user-images.githubusercontent.com/32137262/197638351-749da169-af37-4809-b1e3-b0e8f4d3fc2f.png)
+
+Exemplos:
+|Operador|Descrição|Exemplo|
+|--------|---------|-------|
+|UNION|Conjunto de tuplos que estão no primeiro e/ou no segundo conjunto, sem duplicados|Obter diferentes nomes de alunos e nomes de professores: ```SELECT nome FROM alunos UNION SELECT nome FROM professores;```|
+|UNION ALL|Conjunto de tuplos que estão no primeiro e/ou no segundo conjunto, incluindo duplicados|Obter nomes de alunos e nomes de professores mantendo repetições entre grupos: ```SELECT nome FROM alunos UNION ALL SELECT nome FROM professores;```|
+|INTERSECT|Obter nomes de alunos que também são nomes de professores: ```SELECT nome FROM alunos INTERSECT SELECT nome FROM professores;```|
+|MINUS|Obter nomes de alunos que não são nomes de professores: ```SELECT nome FROM alunos MINUS SELECT nome FROM professores;```|
+
+### Exercícios
+Para cada uma das alíneas seguintes, escreva a query que permite obter:
+1. 
 
 ## 7. Trabalho de Casa
 O trabalho de casa será publicado após a aula.
