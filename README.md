@@ -1,11 +1,6 @@
 # aula06
-Nesta aula continuamos a trabalhar a linguagem SQL. Olhamos para as funções de agregação que utilizamos para obter valores cálculados através de operações aplicadas sobre múltiplos tuplos.
+Nesta aula continuamos a trabalhar a linguagem SQL introduzindo novas funções e funcionalidades que permitem efetuar operações mais complexas sobre as bases de dados. Introduzimos funções de linha condicionais que nos permitem definir valores resultantes segundo condições, e funções que nos permitem efetuar conversões entre tipos de dados. Seguidamente, trabalhamos com funções de agregação, um tipo de funções que que permite obter um único valor agregado a partir da aplicação de uma operação sobre um conjunto de tuplos. Apresentamos ainda três operações sobre conjuntos.
 Bom trabalho!
-
-SUM
-AVG
-COUNT
-
 
 [0. Requisitos](#0-requisitos)
 
