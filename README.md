@@ -87,7 +87,8 @@ FROM
 
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. 
+1. Para cada empregado apresente o seu nome, salário e indicação sobre se o seu salário está "acima da média" caso seja superior a 6500 ou "abaixo da média" no caso contrário 
+2. Para cada empregado apresente o seu nome, salário e qual o seu periodo de contratação sendo: "1º período" se até 2002 (incluindo), "2º período" entre 2002 e 2004 (incluindo), "3 período" entre 2004 e 2006 (incluindo) e "4º período" nos restantes casos. Ordene por ordem decrescente de salário
 
 
 ## 2. Conversão de Tipos de Dados
@@ -101,7 +102,8 @@ Podemos usar os operadores:
 
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. 
+1. O valor do salário dos trabalhadores incluindo a respetiva comissão como string com duas casas decimais
+2. A data '2022-10-25 8:00:00' como data e hora, assim como qual será a data após 27 dias
 
 
 ## 3. Funções de Agregação
@@ -115,7 +117,9 @@ As funções de agregação são funções que são aplicadas sobre um conjunto 
 
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. 
+1. Qual o salário base mínimo, máximo e médio recebido pelos empregados
+2. Quantos empregados recebem alguma comissão, quantos recebem uma comissão acima de 25% e quantos não recebem qualquer comissão
+3. Qual o salário mínimo, máximo e médio recebido pelos empregados com e sem comissão
 
 
 ## 4. GROUP BY
@@ -139,7 +143,9 @@ Qual a idade média para cada nome próprio dos alunos
 
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. 
+1. Qual o salário base mínimo, máximo e médio recebido pelos empregados para cada função ordenado por salário médio
+2. Para cada departamento, quantos empregados recebem alguma comissão, quantos recebem uma comissão acima de 25% e quantos não recebem qualquer comissão
+3. Para cada departamento indique a distribuição dos nomes por número de caracteres do nome próprio nos seguintes grupos: quantos trabalhadores têm menos até 3 caracteres, entre 3 e 5, entre 5 e 7 ou mais de 7.
 
 
 ## 5. HAVING
@@ -165,7 +171,9 @@ Quais os nomes de alunos e respetiva idade média quando esta é superior a 23
 
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. 
+1. Qual o salário base mínimo, máximo e médio recebido pelos empregados para cada função ordenado por salário médio apenas para os empregos onde o salário médio esteja entre 10000 e 15000
+2. Para cada departamento que empregue pelo menos 6 empregados, quantos empregados recebem alguma comissão, quantos recebem uma comissão acima de 25% e quantos não recebem qualquer comissão
+3. Para cada departamento indique a distribuição dos nomes por número de caracteres do nome próprio nos seguintes grupos: quantos trabalhadores têm menos até 3 caracteres, entre 3 e 5, entre 5 e 7 ou mais de 7 para os departamentos tenham algum trabalhador cujo nome tenha pelo menos 9 catacteres.
 
 ## 6. Operações UNION, INTERSECT e MINUS
 Em SQL podemos efetuar operações entre vários conjuntos. 
@@ -177,11 +185,12 @@ Exemplos:
 |UNION|Conjunto de tuplos que estão no primeiro e/ou no segundo conjunto, sem duplicados|Obter diferentes nomes de alunos e nomes de professores: ```SELECT nome FROM alunos UNION SELECT nome FROM professores;```|
 |UNION ALL|Conjunto de tuplos que estão no primeiro e/ou no segundo conjunto, incluindo duplicados|Obter nomes de alunos e nomes de professores mantendo repetições entre grupos: ```SELECT nome FROM alunos UNION ALL SELECT nome FROM professores;```|
 |INTERSECT|Obter nomes de alunos que também são nomes de professores: ```SELECT nome FROM alunos INTERSECT SELECT nome FROM professores;```|
-|MINUS|Obter nomes de alunos que não são nomes de professores: ```SELECT nome FROM alunos MINUS SELECT nome FROM professores;```|
 
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite obter:
-1. 
+1. Uma única lista com os nomes próprios e os apelidos de todos os trabalhadores
+2. A lista de nomes próprios que sejam nome de pelo menos um trabalhador que recebe comissão e de um trabalhador que não recebe
+
 
 ## 7. Trabalho de Casa
 O trabalho de casa será publicado após a aula.
