@@ -31,7 +31,12 @@ Caso já tenha o docker pode iniciá-lo usando o comando ```docker start mysgbd`
 Deve também ter o cliente DBeaver.
 
 ## 1. Função IF e CASE
-Como vimos na aula anterior, podemos usar a função ```IFNULL``` para testar a condição se um dado valor é ```NULL``` e devolver caso a comparação seja verdadeira, então retornamos outro valor. Podemos usar a função ```IF``` para testar outras condições sendo assim possivel devolver valores diferentes na função de acordo com o resultado do teste da condição. A sintaxe é ```IF(<<condição>>, <<valor-se-verdadeiro>>, <<valor-se-falso>>)```
+Como vimos na aula anterior, podemos usar a função ```IFNULL``` para testar a condição se um dado valor é ```NULL``` e devolver caso a comparação seja verdadeira, então retornamos outro valor. Podemos usar a função ```IF``` para testar outras condições sendo assim possivel devolver valores diferentes na função de acordo com o resultado do teste da condição. 
+
+A sintaxe é 
+``` sql
+IF(<<condição>>, <<valor-se-verdadeiro>>, <<valor-se-falso>>)
+```
 
 Por exemplo:
 
@@ -185,6 +190,8 @@ Exemplos:
 |UNION|Conjunto de tuplos que estão no primeiro e/ou no segundo conjunto, sem duplicados|Obter diferentes nomes de alunos e nomes de professores: ```SELECT nome FROM alunos UNION SELECT nome FROM professores;```|
 |UNION ALL|Conjunto de tuplos que estão no primeiro e/ou no segundo conjunto, incluindo duplicados|Obter nomes de alunos e nomes de professores mantendo repetições entre grupos: ```SELECT nome FROM alunos UNION ALL SELECT nome FROM professores;```|
 |INTERSECT|Obter nomes de alunos que também são nomes de professores: ```SELECT nome FROM alunos INTERSECT SELECT nome FROM professores;```|
+
+```MINUS``` não existe em MySQL mas veremos como podemos implementar utilizando o ```LEFT JOIN``` na aula 10.
 
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite obter:
