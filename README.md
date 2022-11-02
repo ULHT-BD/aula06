@@ -178,7 +178,7 @@ Quais os nomes de alunos e respetiva idade média quando esta é superior a 23
 Para cada uma das alíneas seguintes, escreva a query que permite obter:
 1. Qual o salário base mínimo, máximo e médio recebido pelos empregados para cada função ordenado por salário médio apenas para os empregos onde o salário médio esteja entre 10000 e 15000
 2. Para cada departamento que empregue pelo menos 6 empregados, quantos empregados recebem alguma comissão, quantos recebem uma comissão acima de 25% e quantos não recebem qualquer comissão
-3. Para cada departamento indique a distribuição dos nomes por número de caracteres do nome próprio nos seguintes grupos: quantos trabalhadores têm menos até 3 caracteres, entre 3 e 5, entre 5 e 7 ou mais de 7 para os departamentos tenham algum trabalhador cujo nome tenha pelo menos 9 catacteres.
+3. Para cada departamento indique a distribuição dos nomes por número de caracteres do nome próprio nos seguintes grupos: quantos trabalhadores têm até 3 caracteres, entre 3 e 5, entre 5 e 7 ou mais de 7 para os departamentos tenham algum trabalhador cujo nome tenha pelo menos 9 catacteres.
 
 ## 6. Operações UNION, INTERSECT e MINUS
 Em SQL podemos efetuar operações entre vários conjuntos. 
@@ -200,7 +200,27 @@ Para cada uma das alíneas seguintes, escreva a query que permite obter:
 
 
 ## 7. Trabalho de Casa
-O trabalho de casa será publicado após a aula.
+Para cada uma das alíneas seguintes, escreva a query que permite obter:
+
+1. Para cada região (id de região), qual o número total de países, bem como o tamanho mínimo, médio e máximo em número de caracteres do nome dos países.
+
+2. Para cada ano, quais as funções (JOB_ID) para as quais foram contratados mais do que um empregado e qual a quantidade.
+
+3. Para cada letra vogal (a,e,i,o,u), quantos nomes próprios contêm pelo menos uma ocorrência dessa vogal
+
+Exemplo de resultado para uma lista de nomes (Pedro, Teresa, Joana, Marta):
+|a|3|
+|-|-|
+|e|2|
+|i|0|
+|o|2|
+|u|0|
+
+Bom trabalho!
+
+SUGESTÃO: se o problema parecer difícil ou estiver com dificuldades em obter o resultado final correto, tente subdividir o problema em partes obtendo isoladamente cada uma das condições pedidas.
+
+NOTA: submeta a sua resposta ao trabalho de casa no moodle, um exercício por linha, num ficheiro de texto com o nome TPC_a06_[N_ALUNO].sql (exemplo: TPC_a06_12345.sql para o aluno número 12345).
 
 ## Bibliografia e Referências
 * [w3schools - MySQL WHERE Clause](https://www.w3schools.com/mysql/mysql_where.asp)
