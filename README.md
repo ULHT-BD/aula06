@@ -230,4 +230,5 @@ NOTA: submeta a sua resposta ao trabalho de casa no moodle, um exercício por li
 * [w3schools - MySQL Functions](https://www.w3schools.com/mysql/mysql_ref_functions.asp)
 
 ## Outros
-Para dúvidas e discussões pode juntar-se ao grupo slack da turma através do [link](https://join.slack.com/t/ulht-bd/shared_invite/zt-1h783xcc2-eRQlIYSqFkDeOAqGC045Rw)
+Para dúvidas e discussões pode juntar-se ao grupo slack da turma através do [link](
+https://join.slack.com/t/ulht-bd/shared_invite/zt-1iyiki38n-ObLCdokAGUG5uLQAaJ1~fA) (atualizado 2022-11-03)
