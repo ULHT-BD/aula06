@@ -206,6 +206,7 @@ Para cada uma das alíneas seguintes, escreva a query que permite obter:
 
 2. Para cada ano, quais as funções (JOB_ID) para as quais foram contratados mais do que um empregado e qual a quantidade.
 
+Exemplo de resultado parcial:
 |ANO|FUNCAO|QTD|
 |----|--------|-|
 |2003|ST_CLERK|2|
