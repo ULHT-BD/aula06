@@ -206,6 +206,18 @@ Para cada uma das alíneas seguintes, escreva a query que permite obter:
 
 2. Para cada ano, quais as funções (JOB_ID) para as quais foram contratados mais do que um empregado e qual a quantidade.
 
+|ANO|FUNCAO|QTD|
+|----|--------|-|
+|2003|ST_CLERK|2|
+|2004|SA_REP|4|
+|2004|SH_CLERK|2|
+|2005|FI_ACCOUNT|2|
+|2005|PU_CLERK|2|
+|2005|SA_MAN|2|
+|2005|SA_REP|8|
+|2005|SH_CLERK|4|
+|...|...|...|
+
 3. Para cada letra vogal (a,e,i,o,u), quantos nomes próprios contêm pelo menos uma ocorrência dessa vogal
 
 Exemplo de resultado para uma lista de nomes (Pedro, Teresa, Joana, Marta):
