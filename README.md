@@ -222,8 +222,9 @@ Exemplo de resultado parcial:
 3. Para cada letra vogal (a,e,i,o,u), quantos nomes próprios contêm pelo menos uma ocorrência dessa vogal
 
 Exemplo de resultado para uma lista de nomes (Pedro, Teresa, Joana, Marta):
-|a|3|
+|letra|qtd_nomes|
 |-|-|
+|a|3|
 |e|2|
 |i|0|
 |o|2|
