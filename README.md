@@ -18,6 +18,8 @@ Bom trabalho!
 
 [7. Trabalho de Casa](#7-trabalho-de-casa)
 
+[8. Resoluções](#8-resoluções)
+
 [Bibliografia e Referências](#bibliografia-e-referências)
 
 [Outros](#outros)
@@ -235,6 +237,11 @@ Bom trabalho!
 SUGESTÃO: se o problema parecer difícil ou estiver com dificuldades em obter o resultado final correto, tente subdividir o problema em partes obtendo isoladamente cada uma das condições pedidas.
 
 NOTA: submeta a sua resposta ao trabalho de casa no moodle, um exercício por linha, num ficheiro de texto com o nome TPC_a06_[N_ALUNO].sql (exemplo: TPC_a06_12345.sql para o aluno número 12345).
+
+## 8. Resoluções
+[Resolução dos exercícios em aula](https://github.com/ULHT-BD/aula06/blob/main/aula06_resolucao.sql)
+
+[Resolução do trabalho de casa](https://github.com/ULHT-BD/aula06/blob/main/TPC_a06_resolucao.sql)
 
 ## Bibliografia e Referências
 * [w3schools - MySQL WHERE Clause](https://www.w3schools.com/mysql/mysql_where.asp)
