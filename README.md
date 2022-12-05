@@ -193,7 +193,7 @@ Exemplos:
 |UNION ALL|Conjunto de tuplos que estão no primeiro e/ou no segundo conjunto, incluindo duplicados|Obter nomes de alunos e nomes de professores mantendo repetições entre grupos: ```SELECT nome FROM alunos UNION ALL SELECT nome FROM professores;```|
 |INTERSECT|Obter nomes de alunos que também são nomes de professores: ```SELECT nome FROM alunos INTERSECT SELECT nome FROM professores;```|
 
-```MINUS``` não existe em MySQL mas veremos como podemos implementar utilizando o ```LEFT JOIN``` na aula 10.
+```MINUS``` não existe em MySQL mas veremos como podemos implementar utilizando o ```EXCEPT``` na aula 11.
 
 ### Exercícios
 Para cada uma das alíneas seguintes, escreva a query que permite obter:
